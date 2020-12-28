@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import './App.css';
 
 // function App() {
@@ -17,13 +17,21 @@ import './App.css';
 
 // We have to Extend the core React component to App class. 
 
+// JSX - JavaScript Syntax Extension - syntatical sugar to allow us to write the output of our component in an xml or html fashion. Under the hood JSX is just vanila JavaScript. Rule of thumb is that your JSX has to always have one parent ellement.
+
+// Fragment - to avoid having a div as the parent element in the component, surrounding the jsx, appearing in the dom. We can use React.Fragment instead as the parent element and there will be no extra elements rendered in the dom. It's like a gohst element for comparison.
+
+// Using variables - place variable within render method, and call it in return fragement inside curly braces. 
+
 class App extends Component {
 
   render() {
+    const name = 'John Doe';
+
     return (
-      <div className="App">
-          <h1>Hello from React</h1>
-      </div>
+      <Fragment className="App">
+        <h1>Hello {name}</h1>
+      </Fragment>
     );
   }
 }
