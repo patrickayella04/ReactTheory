@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import './App.css';
+import Navbar from '../src/components/layout/Navbar'
 
 // function App() {
 //   return (
@@ -32,27 +33,20 @@ class App extends Component {
   
 
   render() {
-    const name = 'John Doe';
-    const loading = false; // Change to true you get loading...
-    const showName = false;
-
+    
+    
     
     return (
-        <Fragment className="App">
+      <Fragment> 
+        
+         <div className="App">
          
-        {
-          loading ? <h4>loading...</h4> : 
-            
-            <Fragment>
-          <h1>Hello {showName && name }</h1> 
-              <p>Did you know {this.myName('Patrick', 'Nyeko')}</p>
-            </Fragment>
-        }
-       
+         
+          <Navbar  />
           
-        {/* {loading ? <h4>loading...</h4> : <p>Did you know {this.myName('Patrick', 'Nyeko')}</p>} */}
-         
-      
+          </div>
+              
+          
         </Fragment>
       );
     
