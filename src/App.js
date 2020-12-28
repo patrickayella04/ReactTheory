@@ -27,19 +27,30 @@ import './App.css';
     
 
 class App extends Component {
-  myName = (name1, name2) => {return `${name1}'s last name is very cool, it is ${name2}.` }
+  myName = (name1, name2) => { return `${name1}'s last name is very cool, it is ${name2}.` }
     
   
 
   render() {
     const name = 'John Doe';
     const loading = false; // Change to true you get loading...
+    const showName = false;
 
     
-      return (
+    return (
         <Fragment className="App">
          
-          {loading ? <h4>loading...</h4> : <h1>Hello {name}</h1> &&  <p>Did you know {this.myName('Patrick', 'Nyeko')}</p> }
+        {
+          loading ? <h4>loading...</h4> : 
+            
+            <Fragment>
+          <h1>Hello {showName && name }</h1> 
+              <p>Did you know {this.myName('Patrick', 'Nyeko')}</p>
+            </Fragment>
+        }
+       
+          
+        {/* {loading ? <h4>loading...</h4> : <p>Did you know {this.myName('Patrick', 'Nyeko')}</p>} */}
          
       
         </Fragment>
