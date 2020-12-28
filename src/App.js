@@ -23,14 +23,23 @@ import './App.css';
 
 // Using variables - place variable within render method, and call it in return fragement inside curly braces. 
 
+// If we wanted to add a method that's a part of the App class then we need to use this.myName. 
+
 class App extends Component {
+  myName = (name1, name2) => {return `${name1}'s last name is very cool, it is ${name2}.` }
+    
+  
 
   render() {
     const name = 'John Doe';
 
+    
+    
+
     return (
       <Fragment className="App">
         <h1>Hello {name}</h1>
+        <p>Did you know {this.myName('Patrick', 'Nyeko')}</p>
       </Fragment>
     );
   }
