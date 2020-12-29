@@ -1,7 +1,30 @@
 import React, {Component, Fragment} from 'react';
 import './App.css';
 import Navbar from '../src/components/layout/Navbar'
+import UserItem from './components/users/UserItem'
 
+    
+
+class App extends Component {
+
+  render() {
+
+    return (
+      <Fragment> 
+        
+         <div className="App">
+          
+            <Navbar  />
+            <UserItem />
+          </div>
+              
+        </Fragment>
+      );
+    
+  }
+}
+
+export default App;
 // function App() {
 //   return (
 //     <div className="App">
@@ -25,36 +48,7 @@ import Navbar from '../src/components/layout/Navbar'
 // Using variables - place variable within render method, and call it in return fragement inside curly braces. 
 
 // If we wanted to add a method that's a part of the App class then we need to use this.myName. The this.keyword is very important because it refers to the current instance of the this object.In this case it pertains to the App class, and its function scope. 
-    
 
-class App extends Component {
-  myName = (name1, name2) => { return `${name1}'s last name is very cool, it is ${name2}.` }
-    
-  
-
-  render() {
-    
-    
-    
-    return (
-      <Fragment> 
-        
-         <div className="App">
-         
-         
-          <Navbar  />
-          
-          </div>
-              
-          
-        </Fragment>
-      );
-    
-    
-    
-
-    
-  }
-}
-
-export default App;
+///////////////////////////////////////
+// 1. COMPONENT STATE
+// Component level state means your state is contained wthin a single component. 
