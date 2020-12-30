@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import './App.css';
 import Navbar from '../src/components/layout/Navbar'
-import UserItem from './components/users/UserItem'
+import Users from './components/users/Users'
 
     
 
@@ -14,8 +14,12 @@ class App extends Component {
         
          <div className="App">
           
-            <Navbar  />
-            <UserItem />
+          <Navbar />
+          
+          <div className="container">
+          <Users />
+          </div>
+            
           </div>
               
         </Fragment>
