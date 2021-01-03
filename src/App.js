@@ -17,11 +17,11 @@ class App extends Component {
   // Refactor code to To async awaite to eliminate use of .then. Because we awaite the request. 
   async componentDidMount() {
     // When you are changing state you cannot directly change it like ex. you cannot say this.state.loading = true. That's not the way we do it in react. At least with class based components we have to use this.setState({here we pass in an object with part of the state we want to change}).
-    this.setState({ loading: true });
+    this.setState({ loading: true }); // Changes state to true
 
-    const res = await axios.get('https://api.github.com/users');
+    const res = await axios.get('https://api.github.com/users');// After we make the request and we get the response. Then we reset the state, by taking users and set it to res.data that we get from the server/API, then we also set loading back to false. ex. this.seState({users: res.data, loading: false}).
+    this.setState({ users: res.data, loading: false }); // Now that we have these 30 users in state, we want to pass them down into our users component through props. 
 
-    console.log(res.data)
   }
 
   render() {
@@ -34,7 +34,7 @@ class App extends Component {
           <Navbar />
           
           <div className="container">
-          <Users />
+            <Users loading={this.state.loading} users={this.state.users}/> 
           </div>
             
           </div>
