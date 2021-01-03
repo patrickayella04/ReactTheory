@@ -1,11 +1,28 @@
 import React, {Component, Fragment} from 'react';
 import './App.css';
-import Navbar from '../src/components/layout/Navbar'
-import Users from './components/users/Users'
+import Navbar from '../src/components/layout/Navbar';
+import Users from './components/users/Users';
+import axios from 'axios';
 
-    
+
 
 class App extends Component {
+  state = {
+    users: [],
+    loading:false  // We have loading as there will be a moment in time before we acually get the data back. While thats fetching we want loading to be true and as soon as its fetched we'll change it back to false. This way if our UI if this data isn't load then lets show a spinner. If i t is loaded then we show data. 
+  }
+  // componentDidMount() {
+  //   axios.get('https://api.github.com/users').then(res => console.log(res.data));
+  // } 
+  // Refactor code to To async awaite to eliminate use of .then. Because we awaite the request. 
+  async componentDidMount() {
+    // When you are changing state you cannot directly change it like ex. you cannot say this.state.loading = true. That's not the way we do it in react. At least with class based components we have to use this.setState({here we pass in an object with part of the state we want to change}).
+    this.setState({ loading: true });
+
+    const res = await axios.get('https://api.github.com/users');
+
+    console.log(res.data)
+  }
 
   render() {
 
@@ -29,30 +46,11 @@ class App extends Component {
 }
 
 export default App;
-// function App() {
-//   return (
-//     <div className="App">
-//         <h1>Hello from React</h1>
-//     </div>
-//   );
-// }
 
-// export default App;
+// Preferably we want to store any app level state, such as our Users, in our app.js(since we are not currently using context or redux, we dont have a centralised store for state, the next best thing is to have it stored in your app.js) This way we can easily send state down to components through props. 
 
-// Turing a function based component above into a class based component below. 
+// We create a life cycle method - ComponentDidMount - this will run when the component mounts. React Lifecycle methods are the series of events that happen from the starting of a React component to its ending. 3. componentDidMount()
+//ComponentDidMount - 
+// Now the component has been mounted. This is the time where the next lifecycle method componentDidMount come in to play.
 
-//We cannot return directly from a class, so we need to use a Method which is basically a function within a class. And that method needs to be called render(). Render is called a life cycle method, which means the it runs at a certain point when the component is loaded. Render is the only life cycle method which is required because it renders the output of the entire component.
-
-// We have to Extend the core React component to App class. 
-
-// JSX - JavaScript Syntax Extension - syntatical sugar to allow us to write the output of our component in an xml or html fashion. Under the hood JSX is just vanila JavaScript. Rule of thumb is that your JSX has to always have one parent ellement.
-
-// Fragment - to avoid having a div as the parent element in the component, surrounding the jsx, appearing in the dom. We can use React.Fragment instead as the parent element and there will be no extra elements rendered in the dom. It's like a gohst element for comparison.
-
-// Using variables - place variable within render method, and call it in return fragement inside curly braces. 
-
-// If we wanted to add a method that's a part of the App class then we need to use this.myName. The this.keyword is very important because it refers to the current instance of the this object.In this case it pertains to the App class, and its function scope. 
-
-///////////////////////////////////////
-// 1. COMPONENT STATE
-// Component level state means your state is contained wthin a single component. 
+// This method is named as soon because the component is mounted and prepared. This is the best place to initiate API calls in order to fetch data from remote servers. In this method, you can use setState which will cause another rendering but It will happen before the browser updates the UI. This is to ensure that the user won’t see the intermediate state.

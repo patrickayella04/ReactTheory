@@ -1,0 +1,194 @@
+import React, { Component } from 'react'
+
+class UserItem extends Component {
+
+    // Severals ways to add state to a class based component. One is using a Constructor which isn't really recomended usless your need to us it for something else. It's basically a funcitons that will run when the component runs. 
+    //constructor() {
+    //super(); // We must call the function super() first which calls parent class constructor.
+    // console.log(123) // We are loging 123 in console because the constructor fires off as soon as the component works. 
+    //this.state = { // state is just a javaScript object. 
+    //   id: 'id',
+    //   login: 'mojombo',
+    //   avatar_url: 'https://avatars0.githubusercontent.com/u/1?v=4',
+    //   html_url:'https://github.com/mojombo'
+    // } // We have this information in our state object, so lets say we want to use it in our render below. We now have the avatar_url displayed in the component which is is stored in the component level state. 
+    //}
+      // We dont need to create a constructor to create state. We can just write state as below. 
+    // state = { // state is just a javaScript object. 
+    //     id: 'id',
+    //     login: 'mojombo',
+    //     avatar_url: 'https://avatars0.githubusercontent.com/u/1?v=4',
+    //     html_url: 'https://github.com/mojombo'
+    // };
+    
+    
+    // We continuously write this.state so we it's recomended we destructure below. const {login, avatar_url, html_url} = this.state;
+    render() {
+        // const { login, avatar_url, html_url } = this.state;
+        const { login, avatar_url, html_url } = this.props.user;
+
+        return (
+            <div className="card text-center">
+                <img src={avatar_url} alt="" className="round-img" style={{ width: '60px' }} /> 
+                <h3>{login}</h3>
+
+                <div>
+                    <a href={html_url} className="btn btn-dark btn-sm my-1">More</a>
+                </div>
+            </div>
+        )
+    }
+}
+
+export default UserItem
+
+// Funcitonal components - Traditionaly, before hooks, functional components were used for basically stateless components if there was no state. This userItem now has no state, everything is getting passed into the render as a prop. Also the navBar component doesn't have any state. So there is no reason for these components to be classes. 
+////////////////////////////////////////////////
+import React, { Component } from 'react';
+import UserItem from './UserItem'
+
+class Users extends Component {
+    state = {
+        users: [
+            {
+                id: '1',
+                login: 'mojombo',
+                avatar_url: 'https://avatars0.githubusercontent.com/u/1?v=4',
+                html_url: 'https://github.com/mojombo'
+            },
+            {
+                id: '2',
+                login: 'defunkt',
+                avatar_url: 'https://avatars0.githubusercontent.com/u/2?v=4',
+                html_url: 'https://github.com/defunkt'
+            },
+            {
+                id: '3',
+                login: 'pjhyett',
+                avatar_url: 'https://avatars0.githubusercontent.com/u/3?v=4',
+                html_url: 'https://github.com/pjhyett'
+            }
+        ]
+    }
+    // Map() is whats called a high order array method which actually takes in a function. Here we use a callback function. This particular function has a paremeter that represents each user which is called user. We call an arrow functions which says for each user we want to render the code written in the function. 
+
+    // Instead of just outputing a div for each of the users in the state, we want to output a user item which is the component we created before this one in UserItem.js. We pass in the entire user, because what's happening is we are looping through the users in the state, for each one 'user variable represents each user in the array of objects. Then we pass it in as a prop to UserItem. 
+    render() {
+        return (
+            //before
+            // <div>
+            //     {this.state.users.map(user => (
+            //         <div key={user.id}>{user.login}</div>
+            //     ))}
+            // </div>
+            // after
+            // Passing state with Props
+            <div style={userStyle}> 
+                {this.state.users.map(user => (
+                    <UserItem key={user.id} user = {user} />
+                ))}
+            </div>
+
+
+        )
+    }
+}
+
+const userStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridGap: '1rem'
+}
+
+export default Users
+/////////////////////////////////////////
+import React, {Component, Fragment} from 'react';
+import './App.css';
+import Navbar from '../src/components/layout/Navbar'
+import Users from './components/users/Users'
+
+    
+
+class App extends Component {
+
+  render() {
+
+    return (
+      <Fragment> 
+        
+         <div className="App">
+          
+          <Navbar />
+          
+          <div className="container">
+          <Users />
+          </div>
+            
+          </div>
+              
+        </Fragment>
+      );
+    
+  }
+}
+
+export default App;
+// function App() {
+//   return (
+//     <div className="App">
+//         <h1>Hello from React</h1>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// Turing a function based component above into a class based component below. 
+
+//We cannot return directly from a class, so we need to use a Method which is basically a function within a class. And that method needs to be called render(). Render is called a life cycle method, which means the it runs at a certain point when the component is loaded. Render is the only life cycle method which is required because it renders the output of the entire component.
+
+// We have to Extend the core React component to App class. 
+
+// JSX - JavaScript Syntax Extension - syntatical sugar to allow us to write the output of our component in an xml or html fashion. Under the hood JSX is just vanila JavaScript. Rule of thumb is that your JSX has to always have one parent ellement.
+
+// Fragment - to avoid having a div as the parent element in the component, surrounding the jsx, appearing in the dom. We can use React.Fragment instead as the parent element and there will be no extra elements rendered in the dom. It's like a gohst element for comparison.
+
+// Using variables - place variable within render method, and call it in return fragement inside curly braces. 
+
+// If we wanted to add a method that's a part of the App class then we need to use this.myName. The this.keyword is very important because it refers to the current instance of the this object.In this case it pertains to the App class, and its function scope. 
+
+///////////////////////////////////////
+// 1. COMPONENT STATE
+// Component level state means your state is contained wthin a single component. 
+///////////////////////////////////////////////////
+import React, { Component } from 'react';
+//Prop types is type checking, it will tell you if your prop should be a number, string or an arry, or object or anything like that.We declare proptypes below as static = proptypes..This way props that are passed in are filtered so they are the correct data type of input making your application more robust. Short way to bring in prop types with our extension is type - impt enter :
+import PropTypes from 'prop-types'
+
+
+// Props - are properties that you can pass into a component from outside the component. 
+// Default props - if we forget to define or put in props outside this component, we can use default props in the component which can be overriden if developer adds in their own props from outside this component. 
+
+export class Navbar extends Component {
+    static defaultProps = {
+        title: 'Github Finder',
+        icon: 'fab fa-github'
+    };
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        icon: PropTypes.string.isRequired
+    }
+
+    render() {
+        return (
+            <nav className="navbar bg-primary">
+                <h1>
+                    <i className={this.props.icon}/> {this.props.title}   
+                </h1>
+            </nav>
+        )
+    }
+}
+
+export default Navbar
