@@ -7,7 +7,10 @@ export class Search extends Component {
     
     onSubmit = e =>  {
         e.preventDefault();
-        console.log(this.state.text);
+        //console.log(this.state.text); // We need to pass this infomation up to the main App component through props. Do we re-write the code with a function that we call searchUsers as this.props.searchUsers(this.state.text). 
+        this.props.searchUsers(this.state.text)
+        // Then here we clear the form after -
+        this.setState({text: ''}) // setting local/component text to nothing.
     }
     
     // We can't actually type in the input value because its a controlled component. So we need to have an onChange event for when we type in the input value area so when it fires off it will update the state.

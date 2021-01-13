@@ -25,8 +25,14 @@ class App extends Component {
     this.setState({ users: res.data, loading: false }); // Now that we have these 30 users in state, we want to pass them down into our users component through props. 
 
   }
+  // Whats Happing? - Once the form is submitted it's calling onSubmit in the Search.js component. Then within the onSubmit method, a prop is set to a function calls searchUsers that passes in the this.state.text. Now in the App.js component the prop searchUsers is set next to Search component to call this.searchUsers to call in the App.js just below here.
+  // Search Github users - We want to make a call to the github endpoint then add the query. 
+  searchUsers = text => {
+    console.log(text);
+  }
 
   render() {
+
 
     return (
       <Fragment> 
@@ -36,7 +42,7 @@ class App extends Component {
           <Navbar />
           
           <div className="container">
-            <Search />
+            <Search searchUsers={this.searchUsers} />
             <Users loading={this.state.loading} users={this.state.users}/> 
           </div>
             
