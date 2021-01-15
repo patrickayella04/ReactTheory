@@ -16,19 +16,20 @@ class App extends Component {
   //   axios.get('https://api.github.com/users').then(res => console.log(res.data));
   // } 
   // Refactor code to To async awaite to eliminate use of .then. Because we awaite the request. 
-  async componentDidMount() {
+  // async componentDidMount() {
     
-    // When you are changing state you cannot directly change it like ex. you cannot say this.state.loading = true. That's not the way we do it in react. At least with class based components we have to use this.setState({here we pass in an object with part of the state we want to change}).
-    this.setState({ loading: true }); // Changes state to true
+  //   // When you are changing state you cannot directly change it like ex. you cannot say this.state.loading = true. That's not the way we do it in react. At least with class based components we have to use this.setState({here we pass in an object with part of the state we want to change}).
+  //   this.setState({ loading: true }); // Changes state to true
 
-    const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);// After we make the request and we get the response. Then we reset the state, by taking users and set it to res.data that we get from the server/API, then we also set loading back to false. ex. this.seState({users: res.data, loading: false}).
-    this.setState({ users: res.data, loading: false }); // Now that we have these 30 users in state, we want to pass them down into our users component through props. 
+  //   const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);// After we make the request and we get the response. Then we reset the state, by taking users and set it to res.data that we get from the server/API, then we also set loading back to false. ex. this.seState({users: res.data, loading: false}).
+  //   this.setState({ users: res.data, loading: false }); // Now that we have these 30 users in state, we want to pass them down into our users component through props. 
 
-  }
-  // Whats Happing? - Once the form is submitted it's calling onSubmit in the Search.js component. Then within the onSubmit method, a prop is set to a function calls searchUsers that passes in the this.state.text. Now in the App.js component the prop searchUsers is set next to Search component to call this.searchUsers to call in the App.js just below here.
+  // }
+  // Whats Happing? - Once the form is submitted it's calling onSubmit in the Search.js component. Then within the onSubmit method, a prop is set to a function that calls searchUsers method that doesn't exist yet in that component, that passes in the this.state.text. Now in the App.js component the prop searchUsers is set next to Search component to call this.searchUsers to call in the App.js just below here. (This is called prop drilling, sending information up and down to compenents through props which can get messy or confusing- but there is another way :-)
   // Search Github users - We want to make a call to the github endpoint then add the query. 
-  searchUsers = text => {
-    console.log(text);
+  searchUsers =  async text => { // adding async before the paremter
+    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);// After we make the request and we get the response. Then we reset the state, by taking users and set it to res.data.items that we get from the server/API, then we also set loading back to false. ex. this.seState({users: res.data.items, loading: false}).
+    this.setState({ users: res.data.items, loading: false });
   }
 
   render() {
