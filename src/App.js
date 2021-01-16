@@ -4,13 +4,15 @@ import Navbar from '../src/components/layout/Navbar';
 import Users from './components/users/Users';
 import Search from './components/users/Search';
 import axios from 'axios';
+import Alert from './components/layout/Alert'
 
 
 
 class App extends Component {
   state = {
     users: [],
-    loading:false  // We have loading as there will be a moment in time before we acually get the data back. While thats fetching we want loading to be true and as soon as its fetched we'll change it back to false. This way if our UI if this data isn't load then lets show a spinner. If i t is loaded then we show data. 
+    loading: false,  // We have loading as there will be a moment in time before we acually get the data back. While thats fetching we want loading to be true and as soon as its fetched we'll change it back to false. This way if our UI if this data isn't load then lets show a spinner. If i t is loaded then we show data. 
+    alert: null // alert state we set it to null by default, when we have an alert and when we set one its going to be set as an object with Message & a Type in its paremerter. 
   }
   // componentDidMount() {
   //   axios.get('https://api.github.com/users').then(res => console.log(res.data));
@@ -37,8 +39,15 @@ class App extends Component {
   // Clear users from state
   clearUsers = () => this.setState({ users: [], loading: false }); // In search.js when we click the clear button it will call the prop clearUsers that is catched in App.js which will fire off the method clearUsers here which set the users back to empty by clearing it in the UI. 
 
-  render() {
+  // Set Alert
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } }); // Alert set to object with a msg which be the msg thats passed in, and a type which will be th type thats passed in. This will not display anything but it will put the alert into the state above. 
 
+    setTimeout(() => this.setState({alert: null}), 5000);// takes alert away after 5 seconds. 
+  }
+
+  render() {
+    const { users, loading } = this.state; // Destructuring
 
     return (
       <Fragment> 
@@ -48,8 +57,9 @@ class App extends Component {
           <Navbar />
           
           <div className="container">
-            <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length > 0 ? true: false} />
-            <Users loading={this.state.loading} users={this.state.users}/> 
+            <Alert alert={this.state.alert} />
+            <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={users.length > 0 ? true: false} setAlert={this.setAlert} />
+            <Users loading={loading} users={users}/> 
           </div>
             
           </div>
