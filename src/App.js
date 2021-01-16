@@ -27,10 +27,15 @@ class App extends Component {
   // }
   // Whats Happing? - Once the form is submitted it's calling onSubmit in the Search.js component. Then within the onSubmit method, a prop is set to a function that calls searchUsers method that doesn't exist yet in that component, that passes in the this.state.text. Now in the App.js component the prop searchUsers is set next to Search component to call this.searchUsers to call in the App.js just below here. (This is called prop drilling, sending information up and down to compenents through props which can get messy or confusing- but there is another way :-)
   // Search Github users - We want to make a call to the github endpoint then add the query. 
-  searchUsers =  async text => { // adding async before the paremter
+  searchUsers = async text => { // adding async before the paremter
+    this.setState({loading: true})
+
     const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);// After we make the request and we get the response. Then we reset the state, by taking users and set it to res.data.items that we get from the server/API, then we also set loading back to false. ex. this.seState({users: res.data.items, loading: false}).
     this.setState({ users: res.data.items, loading: false });
   }
+
+  // Clear users from state
+  clearUsers = () => this.setState({ users: [], loading: false }); // In search.js when we click the clear button it will call the prop clearUsers that is catched in App.js which will fire off the method clearUsers here which set the users back to empty by clearing it in the UI. 
 
   render() {
 
@@ -43,7 +48,7 @@ class App extends Component {
           <Navbar />
           
           <div className="container">
-            <Search searchUsers={this.searchUsers} />
+            <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length > 0 ? true: false} />
             <Users loading={this.state.loading} users={this.state.users}/> 
           </div>
             
