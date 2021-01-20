@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, {Fragment, Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from '../src/components/layout/Navbar';
 import Users from './components/users/Users';
@@ -64,11 +64,12 @@ class App extends Component {
                 </Fragment>
               )} />
               <Route exact path='/about' component={About} />
-              <Route exact path='/user:login' render={props => (
+              
+              <Route exact path=''  render={props => (
                 
-                  <User {...props} getUser={this.getUser} user={user} loading={loading} />
-                  
-              )} />
+                <User {...props} getUser={this.getUser} user={user} loading={loading} />
+                
+            )} /> 
               
             </Switch>
           </div>
@@ -80,3 +81,6 @@ class App extends Component {
 
 export default App;
 
+
+
+            
