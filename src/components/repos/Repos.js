@@ -1,9 +1,15 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import RepoItem from './RepoItem';
 
-export const repos = () => {
-    return (
-        <div>
-            
-        </div>
-    )
+
+
+const Repos = ({repos}) => {
+    return repos.map(repos => <RepoItem repos={repos} key={repos.id}/> )
 }
+
+Repos.propTypes = {
+    repos: PropTypes.array.isRequired
+};
+
+export default Repos
