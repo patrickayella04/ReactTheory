@@ -1,50 +1,53 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 
-export class Search extends Component {
-    state = {
-        text: ''
-    };
+const Search = ({searchUsers, showClear, clearUsers, setAlert}) =>  {
+    const [text, setText] = useState(''); // The way useState works is by destructring. First pull out text or what ever you want to call this piece of state. Then call a method to change the state called setText so usally "set" and then followed by the name of the piece of state. Then set it to equal setState() and we within the parenthasis we put in a default value. In this case it will be an empty string(blank). 
 
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired,
-        setAlert: PropTypes.func.isRequired
-    };
-    
-    onSubmit = e => {
+
+    // This component isn't a class anymore, so if we want a function within a function we add const at the begining.
+    const onSubmit = e => {
         e.preventDefault();
         
         if (this.state.text === '') {
-            this.props.setAlert('Please enter something', 'light')
+            setAlert('Please enter something', 'light')
         } else {
-            this.props.searchUsers(this.state.text)
-            this.setState({ text: '' }); // setting local/component text to nothing.
+           searchUsers(text)
+            setText(''); // setting local/component text to nothing.
         }
     }
     
-    onChange = e => { 
-        this.setState({ text: e.target.value });
+    const onChange = e => { 
+        this.setState(e.target.value);
     }
-   
-    render() {
-        const { showClear, clearUsers } = this.props; // Destructuring props
-
-        return (
-            <div>
-                <form onSubmit={this.onSubmit} className="form">
-                    <input type="text" name="text" placeholder="Search Users..." value={this.state.text} onChange={this.onChange}/>
-                    <input type="submit" value="Search" className="btn btn-dark btn-block" />
-                </form>
-                {showClear && (
-                    <button className="btn btn-light btn-block" onClick={clearUsers}>Clear
-                    </button>
-                )}
-            </div>
-        )
-    }
+        
+    return (
+        <div>
+            <form onSubmi t={onSubmit} className="form">
+                <input
+                    type="text"
+                    name="text"
+                    placeholder="Search Users..."
+                    value={text}
+                    onChange={onChange} />
+                <input type="submit" 
+                    value="Search"
+                    className="btn btn-dark btn-block" />
+            </form>
+            {showClear && (
+                <button className="btn btn-light btn-block" onClick={clearUsers}>Clear
+                </button>
+            )}
+        </div>
+    )
 }
+
+Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired
+};
 
 export default Search
