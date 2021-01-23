@@ -9,8 +9,7 @@ const Search = ({searchUsers, showClear, clearUsers, setAlert}) =>  {
     // This component isn't a class anymore, so if we want a function within a function we add const at the begining.
     const onSubmit = e => {
         e.preventDefault();
-        
-        if (this.state.text === '') {
+        if (text === '') {
             setAlert('Please enter something', 'light')
         } else {
            searchUsers(text)
@@ -18,20 +17,20 @@ const Search = ({searchUsers, showClear, clearUsers, setAlert}) =>  {
         }
     }
     
-    const onChange = e => { 
-        this.setState(e.target.value);
-    }
+    const onChange = e => setText(e.target.value);
+
         
     return (
         <div>
-            <form onSubmi t={onSubmit} className="form">
+            <form onSubmit ={onSubmit} className="form">
                 <input
                     type="text"
                     name="text"
                     placeholder="Search Users..."
                     value={text}
                     onChange={onChange} />
-                <input type="submit" 
+                <input
+                    type="submit" 
                     value="Search"
                     className="btn btn-dark btn-block" />
             </form>
