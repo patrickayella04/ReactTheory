@@ -5,10 +5,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
+    
     useEffect(() => {
-        getUser(this.props.match.params.login);
-        getUserRepos(this.props.match.params.login);
-    })
+        getUser(match.params.login);
+        getUserRepos(match.params.login);
+        // eslint-disable-next-line
+    },[]); // When you want to run something when the component mounts, use useEffect and a empty set of brackets to stop continuous loop/reload of requests. // eslint-disable-next-line will disable any warnings for your to put dependencies in brackets. As by doing so we re-start the continuous loop/reload again [getUser, getUserRepos]. However we can and will add dependancies but not ones that cause it to loop/reload.
 
         const {
             name,
@@ -24,7 +26,7 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
             public_gists,
             hireable,
             company
-        } = this.props.user;
+        } = user;
 
     
         if (loading) return <Spinner />;
