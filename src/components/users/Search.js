@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
+import GithubContext from '../../context/github/githubContext';
 
 
-const Search = ({searchUsers, showClear, clearUsers, setAlert}) =>  {
+const Search = ({ showClear, clearUsers, setAlert }) => {
+    const githubContext = useContext(GithubContext)
+
+
     const [text, setText] = useState(''); // The way useState works is by destructring. First pull out text or what ever you want to call this piece of state. Then call a method to change the state called setText so usally "set" and then followed by the name of the piece of state. Then set it to equal setState() and we within the parenthasis we put in a default value. In this case it will be an empty string(blank). 
 
 
@@ -12,7 +16,7 @@ const Search = ({searchUsers, showClear, clearUsers, setAlert}) =>  {
         if (text === '') {
             setAlert('Please enter something', 'light')
         } else {
-           searchUsers(text)
+           githubContext.searchUsers(text)
             setText(''); // setting local/component text to nothing.
         }
     }
@@ -43,7 +47,6 @@ const Search = ({searchUsers, showClear, clearUsers, setAlert}) =>  {
 }
 
 Search.propTypes = {
-    searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
     showClear: PropTypes.bool.isRequired,
     setAlert: PropTypes.func.isRequired
