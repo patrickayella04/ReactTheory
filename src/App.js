@@ -7,7 +7,9 @@ import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 import axios from 'axios';
+import GithubState from './context/github/GithubState';
 import './App.css';
+import Githubstate from './context/github/GithubState';
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -85,7 +87,8 @@ const App = () => {
 
     // const { users, user, repos, loading } = this.state; // Destructuring - No need to define these states, they are all defined up top. 
 
-    return (
+  return (
+    <Githubstate>
       <Router>
         <div className="App">
           <Navbar />
@@ -125,6 +128,7 @@ const App = () => {
           </div>
         </div>
       </Router>
+    </Githubstate>
     );
   
 }
