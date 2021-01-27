@@ -1,10 +1,16 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import GithubContext from '../../context/github/githubContext';
 
-const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
+
+
+const User = ({  match }) => {
+
+    const githubContext = useContext(GithubContext);
+    
+    const { user, getUser, loading, getUserRepos, repos } = githubContext;
     
     useEffect(() => {
         getUser(match.params.login);
@@ -12,7 +18,7 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
         // eslint-disable-next-line
     },[]); // When you want to run something when the component mounts, use useEffect and a empty set of brackets to stop continuous loop/reload of requests. // eslint-disable-next-line will disable any warnings for your to put dependencies in brackets. As by doing so we re-start the continuous loop/reload again [getUser, getUserRepos]. However we can and will add dependancies but not ones that cause it to loop/reload.
 
-        const {
+        const  {
             name,
             avatar_url,
             location,
@@ -31,7 +37,9 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
     
         if (loading) return <Spinner />;
 
-        return <Fragment>
+    return (
+        
+        <Fragment >
             
             <Link to='/' className='btn btn-light'> 
                 Back to Search
@@ -81,16 +89,13 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
             <Repos repos={repos} />
         </Fragment>
         
+    )
+        
+        
    
 }
 
-User.propTypes = {
-    loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
-    repos: PropTypes.array.isRequired,
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired
-}
+
 
 export default User;
 

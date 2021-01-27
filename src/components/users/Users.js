@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import UserItem from './UserItem'
 import Spinner from '../layout/Spinner';
-import PropTypes from 'prop-types'
+
+import GithubContext from '../../context/github/githubContext'; // To use any use context state or actions in ANY component, just import the folder/component, initialise it in the component function below with const githubContext = ..., then you can call it on that object ie. githubContext.blablah.
 
  
-const Users = ({ users, loading }) => { 
+const Users = () => { 
+    const githubContext = useContext(GithubContext); // Bring in github context with uppercase (G) GithubContext - and initialise it with lowercase (g) githubContext.
+
+    const { loading, users } = githubContext;
     
     if (loading) { // loading passed in from app.js state
         return <Spinner />
@@ -20,10 +24,7 @@ const Users = ({ users, loading }) => {
     }
 }
 
-Users.propTypes = {
-    users: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired
-}
+
 
 const userStyle = {
     display: 'grid',
