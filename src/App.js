@@ -7,8 +7,6 @@ import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 
-
-
 import Githubstate from './context/github/GithubState';
 import AlertState from './context/alert/AlertState';
 import './App.css';
@@ -33,17 +31,8 @@ const App = () => {
                   <Users  />
                 </Fragment>
                 )} />
-              
-              <Route exact path='/about' component={About} />
-              
-              <Route exact path='/users/:login'
-                render={props => (
-                <User {...props}
-                  
-                  
-                  />
-                
-              )} />
+                  <Route exact path='/about' component={About} />
+                  <Route exact path='/users/:login' component={User} />
                 
             </Switch>
           </div>

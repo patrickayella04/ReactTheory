@@ -42,8 +42,6 @@ const Githubstate = props => {
        
       };
 
-
-
     
     // Clear Users
     const clearUsers = () => {
@@ -83,12 +81,6 @@ const Githubstate = props => {
             payload: res.data
         })
     }
-    
-    
-    
-
-    
-    
     
 
     
