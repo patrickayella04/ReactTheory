@@ -12,6 +12,11 @@ import {
 
 } from '../types';
 
+let githubClientId;
+let githubClientSecret;
+
+// Check our environment
+
 const Githubstate = props => {
     const initialState = {
         users: [],
